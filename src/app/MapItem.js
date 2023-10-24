@@ -8,15 +8,19 @@ import { GridItem, Flex, Tooltip, Button, useDisclosure,
     ModalBody,
     ModalCloseButton,
     Text} from '@chakra-ui/react'
+import { useAppContext } from './useAppContext'
 
 function MapItem(item, data) {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const {isContextOpen,
+        onContextOpen,
+        onContextClose} = useAppContext()
     let exitArrays = [1,2,3,4,5,6]
   return (
     <GridItem border='1px solid grey'>
         {item ? 
         <Flex justify='center' align='center' h='100%'>
-            <Tooltip label={item.key == 1 ? `Crowd Level: ${data}` : `Crowd Level: ${item.crowd}`} placement='top' isOpen
+            <Tooltip label={item.key == 1 ? `Crowd Level: ${data}` : `Crowd Level: ${item.crowd}`} placement='top' isOpen={!isContextOpen}
                 bg={item.key == 1 ?
                     data > 800 ? 'red' :
                     data > 400 ? '#F4B14A':
@@ -25,7 +29,6 @@ function MapItem(item, data) {
                     item.crowd > 400 ? '#F4B14A':
                     'green'
                     }
-                zIndex={4}
             >
                 <Button
                     borderRadius='50%'
@@ -38,14 +41,20 @@ function MapItem(item, data) {
                     _hover={{
                         backgroundColor: '#8AABF1',
                     }}
-                    onClick={onOpen}
+                    onClick={() => {
+                        onOpen()
+                        onContextOpen()
+                    }}
                 >
                     Exit {item.key}
                 </Button>  
             </Tooltip>   
-            <Modal isOpen={isOpen} onClose={onClose} zIndex={5}>
-                <ModalOverlay zIndex={5}/>
-                <ModalContent zIndex={5}>
+            <Modal isOpen={isOpen} onClose={() => {
+                onClose()
+                onContextClose()
+            }}>
+                <ModalOverlay/>
+                <ModalContent>
                     <ModalHeader>Alert E-Paper Exit {item.key}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
@@ -62,12 +71,6 @@ function MapItem(item, data) {
                             </Flex>
                         </Flex>
                     </ModalBody>
-
-                    <ModalFooter>
-                        <Button variant='ghost' mr={3} onClick={onClose}>
-                        Close
-                        </Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>  
         </Flex> 

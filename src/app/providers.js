@@ -7,6 +7,7 @@ import {
 import { CacheProvider } from '@chakra-ui/next-js'
 import { ChakraProvider } from '@chakra-ui/react'
 const queryClient = new QueryClient()
+import AppContextProvider from './AppContextProvider'
 
 export function Providers({ 
     children 
@@ -15,7 +16,9 @@ export function Providers({
     <CacheProvider>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider>
-          {children}
+          <AppContextProvider>
+            {children}
+          </AppContextProvider>
         </ChakraProvider>
       </QueryClientProvider>
     </CacheProvider>
