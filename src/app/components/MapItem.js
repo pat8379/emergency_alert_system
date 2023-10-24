@@ -8,7 +8,7 @@ import { GridItem, Flex, Tooltip, Button, useDisclosure,
     ModalBody,
     ModalCloseButton,
     Text} from '@chakra-ui/react'
-import { useAppContext } from './useAppContext'
+import { useAppContext } from '../context/useAppContext'
 
 function MapItem(item, data) {
     const { isOpen, onOpen, onClose } = useDisclosure()

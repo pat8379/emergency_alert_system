@@ -1,8 +1,8 @@
 'use client'
 import { Button, Flex, Grid, GridItem, Tooltip, Text} from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
-import useED from './useED';
-import usePressure from './usePressure';
+import useED from '../queries/useED';
+import usePressure from '../queries/usePressure';
 import MapItem from './MapItem';
 
 function Map() {
