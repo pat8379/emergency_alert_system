@@ -1,16 +1,24 @@
 'use client'
-import { Button, Flex, Grid, GridItem, Tooltip, Text, InputGroup} from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { Button, Flex, Grid, GridItem, Tooltip, Text} from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react'
+import useED from './useED';
+import usePressure from './usePressure';
+import MapItem from './MapItem';
 
 function Map() {
+    const { data, isLoading, isError } = usePressure(
+        // {refetchInterval: 5000}
+        );
+    // const {data: ED} = useED()
     const [items, setItems] = useState(
     [
-        {key: 1,crowd: 30, index: 0},0,0,0,0,
+        {key: 1,crowd: 300, index: 0},0,0,0,0,
         0,0,0,0,0,
-        0,{key: 2,crowd: 21, index: 11},0,{key: 3,crowd: 23, index:13},0,
-        {key: 4,crowd: 54, index: 15},0,0,0,0,
-        0,{key: 5,crowd: 100, index: 21},0,{key: 6,crowd: 76, index: 23},0
+        0,{key: 2,crowd: 210, index: 11},0,{key: 3,crowd: 230, index:13},0,
+        {key: 4,crowd: 540, index: 15},0,0,0,0,
+        0,{key: 5,crowd: 1000, index: 21},0,{key: 6,crowd: 760, index: 23},0
     ])
+
   return (
     <>
         <Flex
@@ -30,34 +38,7 @@ function Map() {
                 templateRows='repeat(5, 1fr)'
             >
                 {items.map((item) => (
-                   <GridItem border='1px solid grey'>
-                    {item ? 
-                    <Flex justify='center' align='center' h='100%'>
-                        <Tooltip label={`Crowd Level: ${item.crowd}%`} placement='top' isOpen
-                            bg={item.crowd > 70 ? 'red' :
-                                item.crowd > 40 ? '#F4B14A':
-                                'green'
-                        }
-                        >
-                            <Button
-                                borderRadius='50%'
-                                aspectRatio={1}
-                                color='white'
-                                fontSize='15px'
-                                minW='50px'
-                                minH='50x'
-                                bgColor='blue'
-                                _hover={{
-                                    backgroundColor: '#8AABF1',
-                                }}
-                            >
-                                Exit {item.key}
-                            </Button>
-                        </Tooltip>
-                        
-                    </Flex> :
-                    ''}
-                   </GridItem>
+                    MapItem(item, data)
                 ))}
                 
 
