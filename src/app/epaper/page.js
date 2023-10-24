@@ -1,5 +1,5 @@
 import { Box, Button } from "@chakra-ui/react";
-import Navigation from "../Navigation";
+import Navigation from "../components/Navigation";
 
 export default function FirstPost() {
     return (
