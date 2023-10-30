@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 
-const fetchPublicPortfolioBreakdown = async () => {
-    const res = await fetch(process.env.NEXT_PUBLIC_UPDATE_EPAPER);
+const fetchPublicPortfolioBreakdown = async (dir) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_UPDATE_EPAPER}field2=${dir}`);
 
     if (!res.ok) throw await res.json();
 
@@ -13,11 +13,11 @@ const fetchPublicPortfolioBreakdown = async () => {
     }
 }
 
-export default ( opts = {}) =>
+export default (params, opts = {}) =>
   useQuery(
-    ['useEDisplay'],
-    async (_key) => {
-      return await fetchPublicPortfolioBreakdown();
+    ['useEDisplay', params],
+    async (key) => {
+      return await fetchPublicPortfolioBreakdown(params);
     },
     {
       ...opts,

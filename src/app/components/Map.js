@@ -7,9 +7,11 @@ import MapItem from './MapItem';
 
 function Map() {
     const { data, isLoading, isError } = usePressure(
-        // {refetchInterval: 5000}
+        {refetchInterval: 5000}
         );
-    // const {data: ED} = useED()
+    const [direction, setDirection] = useState(130)
+        
+    const {data: ED, refetch} = useED(direction, {enabled: false})
     const [items, setItems] = useState(
     [
         {key: 1,crowd: 300, index: 0},0,0,0,0,
@@ -18,6 +20,16 @@ function Map() {
         {key: 4,crowd: 540, index: 15},0,0,0,0,
         0,{key: 5,crowd: 1000, index: 21},0,{key: 6,crowd: 760, index: 23},0
     ])
+
+    const handleClick = (dir) => {
+        setDirection(dir)
+    }
+
+    useEffect(() => {
+      refetch()
+    
+    }, [direction])
+    
 
   return (
     <>
@@ -56,6 +68,20 @@ function Map() {
                     >
                         <Text mr='20px' fontSize='25px'>Exit {item.key}</Text>
                         <Text>Crowd Level: {item.crowd}%</Text>
+                        <Flex mb={2} gap={2}>
+                            <Button onClick={() => handleClick(100)}>
+                                Left
+                            </Button>
+                            <Button onClick={() => handleClick(200)}>
+                                Right
+                            </Button>
+                            <Button onClick={() => handleClick(300)}>
+                                Up
+                            </Button>
+                            <Button onClick={() => handleClick(400)}>
+                                Down
+                            </Button>
+                        </Flex>
                     </Flex> : ''
                 ))}
             </Flex>
