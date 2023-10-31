@@ -67,19 +67,18 @@ function Map() {
                         minW='300px'
                     >
                         <Text mr='20px' fontSize='25px'>Exit {item.key}</Text>
-                        <Text>Crowd Level: {item.crowd}%</Text>
                         <Flex mb={2} gap={2}>
                             <Button onClick={() => handleClick(100)}>
-                                Left
+                                100
                             </Button>
                             <Button onClick={() => handleClick(200)}>
-                                Right
+                                200
                             </Button>
                             <Button onClick={() => handleClick(300)}>
-                                Up
+                                300
                             </Button>
                             <Button onClick={() => handleClick(400)}>
-                                Down
+                                400
                             </Button>
                         </Flex>
                     </Flex> : ''
