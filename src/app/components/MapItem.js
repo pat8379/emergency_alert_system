@@ -25,7 +25,8 @@ function MapItem(item, data, index) {
     returnColor,
     decideBorderColor,
     alertTo,
-    setAlertTo
+    setAlertTo,
+    scenario
   } = useAppContext();
   let exitArrays = [1, 2, 3, 4, 5, 6];
   const crowd = getExits(item);
@@ -42,13 +43,13 @@ function MapItem(item, data, index) {
           justify="center"
           align="center"
           h="100%"
-          bg={item == 1 ? "rgba(0,255,0,0.4)" : alertTo == item ? "rgba(0,0,255,0.4)" : "transparent"}
+          bg={item == scenario ? "rgba(0,255,0,0.4)" : alertTo == item ? "rgba(0,0,255,0.4)" : "transparent"}
         >
           <Tooltip
-            label={item == 1 ? `Crowd Level: ${data}` : `Crowd Level: ${crowd}`}
+            label={item == scenario && data ? `Crowd Level: ${data}` : `Crowd Level: ${crowd}`}
             placement="top"
             isOpen={!isContextOpen}
-            bg={item == 1 ? returnColor(data) : returnColor(crowd)}
+            bg={item == scenario ? returnColor(data) : returnColor(crowd)}
           >
             <Button
               borderRadius="50%"

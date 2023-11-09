@@ -9,7 +9,7 @@ function AppContextProvider({ children }) {
     onOpen: onContextOpen,
     onClose: onContextClose,
   } = useDisclosure();
-  const [exit1, setExit1] = useState();
+  const [exit1, setExit1] = useState(1000);
   const [exit2, setExit2] = useState(210);
   const [exit3, setExit3] = useState(230);
   const [exit4, setExit4] = useState(540);
@@ -17,6 +17,8 @@ function AppContextProvider({ children }) {
   const [exit6, setExit6] = useState(760);
 
   const [alertTo, setAlertTo] = useState(4);
+
+  const [scenario, setscenario] = useState(1)
 
   const getExits = (num) => {
     switch (num) {
@@ -78,7 +80,6 @@ function AppContextProvider({ children }) {
   };
 
   const algorithm = () => {
-    console.log(exit1)
     if (exit1 < 700) {
       setAlertTo(1)
       return
@@ -100,7 +101,6 @@ function AppContextProvider({ children }) {
       return
     }
 
-
     if (exit6 < 700) {
       setAlertTo(6)
       return
@@ -109,8 +109,38 @@ function AppContextProvider({ children }) {
     return
   }
 
+  const algorithm2 = () => {
+    if (exit2 < 700) {
+      setAlertTo(2)
+      return
+    }
+    if (exit4 < 700) {
+      setAlertTo(4)
+      return
+    }
+    if (exit1 < 700) {
+      setAlertTo(1)
+      return
+    }
+    if (exit5 < 700) {
+      setAlertTo(5)
+      return
+    }
+    if (exit3 < 700) {
+      setAlertTo(3)
+      return
+    }
+
+    if (exit6 < 700) {
+      setAlertTo(6)
+      return
+    }
+    setAlertTo(2)
+    return
+  }
+
   const decideBorderColor = (item, position) => {
-    const path = getPath(alertTo)
+    const path = getPath(alertTo, scenario)
     if (path[item] === position) {
       return "7px solid blue"
     }
@@ -118,9 +148,23 @@ function AppContextProvider({ children }) {
   }
 
   useEffect(() => {
-    algorithm()
+    if (scenario == 1) {
+      algorithm()
+    } else {
+      algorithm2()
+    }
   
-  }, [exit1,exit2,exit3,exit4,exit5,exit6])
+  }, [exit1,exit2,exit3,exit4,exit5,exit6, scenario])
+
+  useEffect(() => {
+    if (scenario == 1) {
+      setAlertTo(2)
+    } else {
+      setAlertTo(1)
+    }
+  
+  }, [scenario])
+  
   
   return (
     <AppContext.Provider
@@ -134,6 +178,8 @@ function AppContextProvider({ children }) {
         decideBorderColor,
         alertTo,
         setAlertTo,
+        scenario,
+        setscenario
       }}
     >
       {children}

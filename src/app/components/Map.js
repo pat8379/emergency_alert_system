@@ -14,8 +14,8 @@ import MapItem from "./MapItem";
 
 function Map() {
   const { data } = usePressure({ refetchInterval: 5000 });
-  const [direction, setDirection] = useState(130);
-  const { getExits, setExits } = useAppContext();
+  const [direction, setDirection] = useState(100);
+  const { getExits, setExits, scenario } = useAppContext();
 
   const {data: ED, refetch} = useED(direction, {enabled: false})
   const [items, setItems] = useState([
@@ -30,9 +30,9 @@ function Map() {
     setDirection(dir);
   };
 
-  useEffect(() => {
-    setExits(data,1)
-  }, [data])
+  // useEffect(() => {
+  //   setExits(data,1)
+  // }, [data])
 
   useEffect(() => {
     refetch()
@@ -63,7 +63,7 @@ function Map() {
             minW="300px"
           >
             <Text mr="20px" fontSize="25px">
-              Exit 1
+              Exit {scenario}
             </Text>
             <Flex mb={2} gap={2}>
               <Button onClick={() => handleClick(100)}>100</Button>
@@ -73,7 +73,7 @@ function Map() {
             </Flex>
           </Flex>
           {items
-            .filter((item) => item !== 1)
+            .filter((item) => item !== scenario)
             .map((item) =>
               item ? (
                 <Flex
